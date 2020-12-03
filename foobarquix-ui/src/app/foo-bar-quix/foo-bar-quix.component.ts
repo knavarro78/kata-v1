@@ -10,6 +10,8 @@ export class FooBarQuixComponent implements OnInit, OnDestroy {
 
   constructor(private fooBarQuixService: FooBarQuixService) { }
 
+  convertedList: NumberConverted[] = [];
+
   ngOnInit(): void {
   }
 
@@ -17,6 +19,10 @@ export class FooBarQuixComponent implements OnInit, OnDestroy {
   }
 
   convertNumber(inputNumber: number): void {
+    this.fooBarQuixService.convertNumber(inputNumber).subscribe(convertedNumber => {
+      convertedNumber['numberToConvert'] = inputNumber;
+      this.convertedList.unshift(<NumberConverted>convertedNumber);
+    }, err => console.log(err));
   }
 
 }
